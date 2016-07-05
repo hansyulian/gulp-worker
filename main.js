@@ -2,23 +2,23 @@
 var gulpWorker = {};
 (function() {
     gulpWorker.config = {
-        name: "default",
-        destination: "./",
-        combined_destination: null,
-        minified_destination: null,
-        base_folder: "./",
-        generate_sourcemaps: true,
-        version_on_destination_folder: true,
-        version_on_file: true,
-        create_minified: true,
-        create_combined: true,
-        combined_prefix: "",
-        combined_postfix: "",
-        minified_prefix: "",
-        minified_postfix: ".min",
-        automatic_versioning: false,
-        changelog_file_name: "changelog.txt",
-        gulp_on_watch: true
+        name: "default", // name of output file 
+        destination: "./", // output folder
+        combined_destination: null, // destination for combined
+        minified_destination: null, // destination for minified
+        base_folder: "./", // base source folder
+        generate_sourcemaps: true, // generate sourcemap
+        version_on_destination_folder: true, // put version number in folder
+        version_on_file: true, // put version number in file
+        create_minified: true, // create minified version
+        create_combined: true, // create combined version
+        combined_prefix: "", // prefix for combined file
+        combined_postfix: "", // postfix for combined file
+        minified_prefix: "", // prefix for minified file
+        minified_postfix: ".min", // postfix for minified file
+        automatic_versioning: false, // version number taken from changelog
+        changelog_file_name: "changelog.txt", // name of changelog file
+        gulp_on_watch: true // when doing watch, trigger default task
     };
     var config = gulpWorker.config;
     var gulp = require('gulp'),
@@ -137,12 +137,19 @@ var gulpWorker = {};
         };
     };
 
+    var chains = function(files, options, type) {};
+
     gulpWorker.js = function(files, options) {
         works.push({
             files: files,
             options: options,
             type: "js"
         });
+        return {
+            chain: function(options) {
+                gulpWorker.js(files, options);
+            }
+        };
     };
 
     gulpWorker.css = function(files, options) {
@@ -151,6 +158,11 @@ var gulpWorker = {};
             options: options,
             type: "css"
         });
+        return {
+            chain: function(options) {
+                gulpWorker.css(files, options);
+            }
+        };
     };
 
     gulpWorker.less = function(files, options) {
@@ -158,8 +170,13 @@ var gulpWorker = {};
             files: files,
             options: options,
             type: "less"
-        })
-    }
+        });
+        return {
+            chain: function(options) {
+                gulpWorker.less(files, options);
+            }
+        };
+    };
 
     gulp.task('watch', function() {
         for (var i = 0; i < works.length; i++) {

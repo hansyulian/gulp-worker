@@ -1,1 +1,0 @@
-This package is a gulp utility to help creating a single combined css or javascript file from several files. The combined files also can be appended by version. The version can read from changelog.txt file or manually inputted when running the gulp. 
