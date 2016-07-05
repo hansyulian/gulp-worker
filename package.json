@@ -4,7 +4,7 @@
   "description": "Hans Yulian's gulp worker to combine and minify assets, can be used to make library builds also",
   "main": "main.js",
   "scripts": {
-    "test": "unit_test"
+    "test": "test"
   },
   "repository": {
     "type": "git",
@@ -36,5 +36,9 @@
     "gulp-util": "^3.0.7",
     "minifier": "^0.7.1",
     "yargs": "^4.7.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   }
 }

@@ -1,0 +1,1 @@
+require("./tests/module-content-test.js")

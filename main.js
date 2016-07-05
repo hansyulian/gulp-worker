@@ -199,5 +199,4 @@ var gulpWorker = {};
 
     });
 })();
-
-exports = gulpWorker;
+module.exports = gulpWorker;
