@@ -39,7 +39,7 @@ var gulpWorker = {};
 
     var init_settings = function(options) {
         var settings = JSON.parse(JSON.stringify(gulpWorker.config));
-        for (i in options)
+        for (var i in options)
             settings[i] = options[i];
 
         if (settings.base_folder[settings.base_folder.length - 1] != "/")
@@ -54,7 +54,7 @@ var gulpWorker = {};
         var sources = [];
         var show_log = options.show_log;
         //checking file existence and passing to process array
-        for (i in files) {
+        for (var i in files) {
             var file = directory + files[i];
             console.log("\t\t\t" + colors.green(file));
             sources.push(file);
@@ -90,7 +90,7 @@ var gulpWorker = {};
         //telling that the task is starting
         console.log(colors.cyan("\n\tStarting Task\n\n") + colors.yellow("\t\tFiles:"));
         //initialize settings given
-        settings = init_settings(options);
+        var settings = init_settings(options);
         var sources = filePaths(files, settings.base_folder, {
             show_log: true
         });

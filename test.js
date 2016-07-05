@@ -1,1 +1,1 @@
-require("./tests/module-content-test.js")
+require("./tests/module-content-test.js");
