@@ -1,6 +1,6 @@
 {
   "name": "gulp-worker",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Hans Yulian's gulp worker to combine and minify assets, can be used to make library builds also",
   "main": "main.js",
   "scripts": {
@@ -24,14 +24,17 @@
   },
   "homepage": "https://gitlab.com/hansyulian/gulp-worker#README",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-uglify": "^1.5.3",
-    "gulp-concat": "^2.6.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglifycss": "^1.0.6",
-    "gulp-sourcemaps": "^1.6.0",
-    "minifier": "^0.7.1",
+    "colors": "^1.1.2",
     "file-exists": "^1.0.0",
-    "colors": "^1.1.2"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-uglifycss": "^1.0.6",
+    "gulp-util": "^3.0.7",
+    "minifier": "^0.7.1",
+    "yargs": "^4.7.1"
   }
 }
