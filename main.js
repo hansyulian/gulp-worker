@@ -1,3 +1,4 @@
+'use strict';
 var gulpWorker = {};
 (function() {
     gulpWorker.config = {
@@ -198,4 +199,5 @@ var gulpWorker = {};
 
     });
 })();
-return gulpWorker;
+
+exports = gulpWorker;
