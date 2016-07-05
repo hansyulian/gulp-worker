@@ -198,3 +198,4 @@ var gulpWorker = {};
 
     });
 })();
+return gulpWorker;
