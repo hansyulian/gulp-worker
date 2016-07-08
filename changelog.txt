@@ -1,3 +1,6 @@
+0.3.1:
+    - fixed versioning error if file not exists
+
 0.3.0:
     - fixed version number error
     - fixed unit testing

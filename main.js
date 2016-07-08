@@ -86,13 +86,16 @@ var gulpWorker = {};
         var path = require('path');
 
         var file_path = "./" + settings.changelog_file_name;
-        var data = fs.readFileSync(file_path, {
-            encoding: 'utf-8'
-        });
-        var regex = /(\d.\d.\d)/;
-        var match = regex.exec(data);
-        var result = match[0];
-        console.log(colors.green("\tAutomatic versioning, detected version: " + result));
+        if (fileExists(file_path)) {
+            var data = fs.readFileSync(file_path, {
+                encoding: 'utf-8'
+            });
+            var regex = /(\d.\d.\d)/;
+            var match = regex.exec(data);
+            var result = match[0];
+            console.log(colors.green("\tAutomatic versioning, detected version: " + result));
+        } else
+            console.log(file_path + " not exists!");
         if (result)
             return result;
         else
