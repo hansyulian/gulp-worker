@@ -1,4 +1,21 @@
 'use strict';
+Object.prototype.equals = function(compare) {
+    var a = JSON.parse(JSON.stringify(this));
+    var b = JSON.parse(JSON.stringify(compare));
+    for (var i in a)
+        if (a[i] != b[i]) return false;
+    for (var i in b)
+        if (a[i] != b[i]) return false;
+    return true;
+};
+
+Object.prototype.extends = function(options) {
+    var result = JSON.parse(JSON.stringify(this));
+    for (var i in options)
+        if (typeof options[i] != "function")
+            result[i] = options[i];
+    return result;
+};
 var gulpWorker = {};
 (function() {
     gulpWorker.config = {
@@ -8,15 +25,15 @@ var gulpWorker = {};
         minified_destination: null, // destination for minified
         base_folder: "./", // base source folder
         generate_sourcemaps: true, // generate sourcemap
-        version_on_destination_folder: true, // put version number in folder
-        version_on_file: true, // put version number in file
+        version_on_destination_folder: false, // put version number in folder
+        version_on_file: false, // put version number in file
         create_minified: true, // create minified version
         create_combined: true, // create combined version
         combined_prefix: "", // prefix for combined file
         combined_postfix: "", // postfix for combined file
         minified_prefix: "", // prefix for minified file
         minified_postfix: ".min", // postfix for minified file
-        automatic_versioning: false, // version number taken from changelog
+        automatic_versioning: true, // version number taken from changelog
         changelog_file_name: "changelog.txt", // name of changelog file
         gulp_on_watch: true // when doing watch, trigger default task
     };
@@ -54,15 +71,13 @@ var gulpWorker = {};
         var sources = [];
         var show_log = options.show_log;
         //checking file existence and passing to process array
-        for (var i in files) {
+        for (var i = 0; i < files.length; i++) {
             var file = directory + files[i];
-            console.log("\t\t\t" + colors.green(file));
-            sources.push(file);
-            // if (fileExists(file)) {
-            //     console.log("\t\t\t" + colors.green(file));
-            //     sources.push(file);
-            // } else
-            //     console.log("\t\t\t" + colors.red(file) + " <- Missing!");
+            if (fileExists(file)) {
+                console.log("\t\t\t" + colors.green(file));
+                sources.push(file);
+            } else
+                console.log("\t\t\t" + colors.red(file) + " <- Missing!");
         }
         return sources;
     };
@@ -70,7 +85,7 @@ var gulpWorker = {};
         var fs = require('fs');
         var path = require('path');
 
-        var file_path = path.join(__dirname, settings.changelog_file_name);
+        var file_path = "./" + settings.changelog_file_name;
         var data = fs.readFileSync(file_path, {
             encoding: 'utf-8'
         });
@@ -104,11 +119,11 @@ var gulpWorker = {};
         var process = gulp.src(sources);
         //initialize source maps if configured so
         if (settings.generate_sourcemaps) {
-            process = process.pipe(sourcemaps.init());
+            process = process.pipe(sourcemaps.init()).on('error', log);
         }
         //if less, compile it and treat as normal css afterward
         if (type == "less") {
-            process = process.pipe(less());
+            process = process.pipe(less()).on('error', log);
             type = "css";
         }
         //combine files
@@ -117,19 +132,19 @@ var gulpWorker = {};
         //output combine files if set
         if (settings.create_combined) {
             console.log(colors.magenta("\t\t\tGenerate minified file in ") + settings.combined_destination + colors.magenta(" as ") + file_name);
-            process = process.pipe(gulp.dest(settings.combined_destination));
+            process = process.pipe(gulp.dest(settings.combined_destination)).on('error', log);
         }
         if (settings.create_minified) {
             file_name = settings.minified_prefix + name + settings.minified_postfix + "." + type;
-            process = process.pipe(uglify())
-                .pipe(rename(file_name));
+            process = process.pipe(uglify()).on('error', log)
+                .pipe(rename(file_name)).on('error', log);
             //generate source maps
             if (settings.generate_sourcemaps) {
                 console.log(colors.magenta("\t\t\tGenerating Source Maps"));
-                process = process.pipe(sourcemaps.write("./"));
+                process = process.pipe(sourcemaps.write("./")).on('error', log);
             }
             console.log(colors.magenta("\t\t\tGenerate minified file in ") + settings.minified_destination + colors.magenta(" as ") + file_name);
-            process = process.pipe(gulp.dest(settings.minified_destination));
+            process = process.pipe(gulp.dest(settings.minified_destination)).on('error', log);
         }
         console.log(colors.rainbow("\n\tTask Finished Successfully!\n"));
         return {
@@ -146,8 +161,9 @@ var gulpWorker = {};
             type: "js"
         });
         return {
-            chain: function(options) {
-                gulpWorker.js(files, options);
+            chain: function(override_options) {
+                var new_options = options.extends(override_options);
+                gulpWorker.js(files, new_options);
             }
         };
     };
@@ -159,8 +175,9 @@ var gulpWorker = {};
             type: "css"
         });
         return {
-            chain: function(options) {
-                gulpWorker.css(files, options);
+            chain: function(override_options) {
+                var new_options = options.extends(override_options);
+                gulpWorker.css(files, new_options);
             }
         };
     };
@@ -172,8 +189,9 @@ var gulpWorker = {};
             type: "less"
         });
         return {
-            chain: function(options) {
-                gulpWorker.less(files, options);
+            chain: function(override_options) {
+                var new_options = options.extends(override_options);
+                gulpWorker.less(files, new_options);
             }
         };
     };
@@ -212,8 +230,5 @@ var gulpWorker = {};
         }
     });
 
-    gulp.task("test", function() {
-
-    });
 })();
 module.exports = gulpWorker;

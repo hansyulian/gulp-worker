@@ -1,3 +1,8 @@
+0.3.0:
+    - fixed version number error
+    - fixed unit testing
+    - chaining will override instead of using new configurations
+
 0.2.0:
     - adding chaining feature
     - adding readme

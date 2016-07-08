@@ -40,8 +40,8 @@ config = {
     minified_destination: null,             // destination for minified
     base_folder: "./",                      // base source folder
     generate_sourcemaps: true,              // generate sourcemap
-    version_on_destination_folder: true,    // put version number in folder
-    version_on_file: true,                  // put version number in file
+    version_on_destination_folder: false,    // put version number in folder
+    version_on_file: false,                  // put version number in file
     create_minified: true,                  // create minified version
     create_combined: true,                  // create combined version
     combined_prefix: "",                    // prefix for combined file
