@@ -1,6 +1,6 @@
 {
   "name": "gulp-worker",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Hans Yulian's gulp worker to combine and minify assets, can be used to make library builds also",
   "main": "main.js",
   "scripts": {
