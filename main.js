@@ -38,6 +38,11 @@ var gulpWorker = {};
         gulp_on_watch: true // when doing watch, trigger default task
     };
     var config = gulpWorker.config;
+    gulpWorker.configure = function(override_config) {
+        for (var i in override_config)
+            gulpWorker.config[i] = override_config[i];
+    }
+
     var gulp = require('gulp'),
         concat = require('gulp-concat'),
         rename = require('gulp-rename'),
