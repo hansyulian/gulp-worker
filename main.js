@@ -218,7 +218,7 @@ var gulpWorker = {};
             var watches = work.files.concat(additionals);
             console.log(colors.cyan("\tStarting watch:\n"));
             console.log(colors.yellow("\t\tWatching Files:\n"));
-            settings = init_settings(work.options);
+            var settings = init_settings(work.options);
             var sources = filePaths(watches, settings.base_folder, {
                 show_log: true
             });

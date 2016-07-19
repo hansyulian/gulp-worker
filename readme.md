@@ -40,20 +40,33 @@ config = {
     minified_destination: null,             // destination for minified
     base_folder: "./",                      // base source folder
     generate_sourcemaps: true,              // generate sourcemap
-    version_on_destination_folder: false,    // put version number in folder
-    version_on_file: false,                  // put version number in file
+    version_on_destination_folder: false,   // put version number in folder
+    version_on_file: false,                 // put version number in file
     create_minified: true,                  // create minified version
     create_combined: true,                  // create combined version
     combined_prefix: "",                    // prefix for combined file
     combined_postfix: "",                   // postfix for combined file
     minified_prefix: "",                    // prefix for minified file
     minified_postfix: ".min",               // postfix for minified file
-    automatic_versioning: false,            // version number taken from changelog
+    automatic_versioning: true,             // version number taken from changelog
     changelog_file_name: "changelog.txt",   // name of changelog file
     gulp_on_watch: true                     // when doing watch, trigger default task
 };
 ```
 
+## Global Configuration Overriding
+In order to override global configuration, there is a function **configure**. Here is an example:
+``` javascript
+worker.configure({
+    destination: "./build",
+    base_folder: "./src"
+})
+```
+This will only override configuration specified. If you want to override specific configuration without using **configure** and have the same result:
+``` javascript
+worker.config.destination = "./build";
+worker.config.base_folder = "./src";
+```
 ## Usage Code
 The code for gulpfile.js will have the format of **worker.PROCESS_NAME(SOURCE_ARRAY,ADDITIONAL_CONFIGURATION)**. Current available processes are css, less, and js. Additional configuration will only override defined config for specific work. Here is the example:
 
