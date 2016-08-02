@@ -54,7 +54,9 @@ var gulpWorker = {};
         colors = require("colors"),
         less = require("gulp-less");
     var argv = require('yargs').argv,
-        version = argv.build ? argv.build : "";
+        version = argv.build ? argv.build : "",
+        production = argv.production ? true : false,
+        development = argv.development ? true : false;
     var log = require('gulp-util').log;
 
 
@@ -138,12 +140,12 @@ var gulpWorker = {};
         var file_name = settings.combined_prefix + name + settings.combined_postfix + "." + type;
         process = process.pipe(concat(file_name));
         //output combine files if set
-        if (settings.create_combined) {
+        if ((settings.create_combined && !production) || development) {
             console.log(colors.magenta("\t\t\tGenerate minified file in ") + settings.combined_destination + colors.magenta(" as ") + file_name);
             process = process.pipe(gulp.dest(settings.combined_destination)).on('error', log);
         }
-        if (settings.create_minified) {
-            file_name = settings.minified_prefix + name + settings.minified_postfix + "." + type;
+        if ((settings.create_minified && !development) || production) {
+            file_name = (!production ? settings.minified_prefix : "") + name + (!production ? settings.minified_postfix : "") + "." + type;
             process = process.pipe(uglify()).on('error', log)
                 .pipe(rename(file_name)).on('error', log);
             //generate source maps

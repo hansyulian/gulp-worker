@@ -1,3 +1,6 @@
+0.5.0:
+    - adding --production and --development to force minify and combine settings
+
 0.4.1:
     - fixing watch bug
     - adding documentation
