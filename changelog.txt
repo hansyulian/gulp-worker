@@ -1,3 +1,6 @@
+0.6.0:
+    - adding * file addressing capability
+
 0.5.0:
     - adding --production and --development to force minify and combine settings
 

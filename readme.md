@@ -28,7 +28,15 @@ If you want to put the version in the result file, use --build version
 ``` javascript
 gulp --build 0.1.6
 ```
-The same --build also can be used for gulp watch
+If you want to enforce development built, regardless of combined or minified settings to produce combined only
+``` javascript
+gulp --development
+```
+If you want to enforce production built, regardless of combined or minified settings to produce minified only
+``` javascript
+gulp --production
+```
+The same additional parameters also can be used for gulp watch
 
 ## Available Configuration
 There are some configurations available for gulp worker together with their default values:

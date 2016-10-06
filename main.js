@@ -19,7 +19,7 @@ Object.prototype.extends = function(options) {
 var gulpWorker = {};
 (function() {
     gulpWorker.config = {
-        name: "default", // name of output file 
+        name: "default", // name of output file
         destination: "./", // output folder
         combined_destination: null, // destination for combined
         minified_destination: null, // destination for minified
@@ -80,7 +80,7 @@ var gulpWorker = {};
         //checking file existence and passing to process array
         for (var i = 0; i < files.length; i++) {
             var file = directory + files[i];
-            if (fileExists(file)) {
+            if (fileExists(file) || file.indexOf("*") != -1) {
                 console.log("\t\t\t" + colors.green(file));
                 sources.push(file);
             } else
