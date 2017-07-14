@@ -1,3 +1,7 @@
+0.7.0:
+    - restructure
+    - parameter conventions
+
 0.6.0:
     - adding * file addressing capability
 
