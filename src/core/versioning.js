@@ -1,4 +1,3 @@
-var versioning = module.exports = {};
 (function(versioning, fs, path, colors, fileExists) {
 
     function detectVersion(file) {
@@ -10,6 +9,7 @@ var versioning = module.exports = {};
                 encoding: "utf-8"
             });
             var regex = /(\d.\d.\d)/;
+            match = data.match(regex);
             result = match[0];
 
             console.log(colors.green("\tAutomatic versioning, detected version: " + result));
@@ -26,4 +26,4 @@ var versioning = module.exports = {};
 
 
     versioning.detectVersion = detectVersion;
-})(versioning, require("fs"), require("path"), require("colors"), require("fileExists"));
+})(module.exports = {}, require("fs"), require("path"), require("colors"), require("file-exists"));

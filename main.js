@@ -11,18 +11,6 @@ var gulpWorker = {};
 (function(gulpWorker) {
 
     //shorthands
-    var config = require("./src/core/config");
-    var args = require("./src/core/arguments");
-    var versioning = require("./src/core/versioning");
-    var paths = require("./src/core/paths");
-    var initialize = require("./src/core/initialize");
-
-
-    var findFiles = paths.findFiles;
-    //properties
-    //actions
-
-
     var gulp = require('gulp'),
         concat = require('gulp-concat'),
         rename = require('gulp-rename'),
@@ -35,19 +23,34 @@ var gulpWorker = {};
         less = require("gulp-less");
     var log = require('gulp-util').log;
 
+    var config = require("./src/core/config");
+    var args = require("./src/core/arguments");
+    var versioning = require("./src/core/versioning");
+    var paths = require("./src/core/paths");
+    var initialize = require("./src/core/initialize");
 
 
-    var init_settings = function(options) {
-        var settings = JSON.parse(JSON.stringify(gulpWorker.config));
-        for (var i in options)
-            settings[i] = options[i];
+    var findFiles = paths.findFiles;
+    var initSettings = function(options) {
+        return initialize.initSettings(options, config);
+    }
+    var context = {
+        gulp: gulp,
+        concat: concat,
+        rename: rename,
+        sourcemaps: sourcemaps,
+        minify: minify,
+        colors: colors,
 
-        if (settings.base_folder[settings.base_folder.length - 1] != "/")
-            settings.base_folder += "/";
-        settings.combined_destination = (settings.combined_destination || settings.destination) + (settings.version_on_destination_folder && version != "" ? "-" + version : "");
-        settings.minified_destination = (settings.minified_destination || settings.destination) + (settings.version_on_destination_folder && version != "" ? "-" + version : "");
-        return settings;
+        initSettings: initSettings
     };
+    //properties
+
+
+    //actions
+
+
+
     var works = [];
 
 
@@ -56,9 +59,10 @@ var gulpWorker = {};
         //telling that the task is starting
         console.log(colors.cyan("\n\tStarting Task\n\n") + colors.yellow("\t\tFiles:"));
         //initialize settings given
-        var settings = init_settings(options);
+        var settings = initSettings(options);
+        var version = versioning.detectVersion(settings.changelogFileName);
         var sources = findFiles(files, settings.base_folder, {
-            show_log: true
+            showLog: true
         });
 
         if (settings.automatic_versioning && version == "")
@@ -102,8 +106,6 @@ var gulpWorker = {};
             files: sources
         };
     };
-
-    var chains = function(files, options, type) {};
 
     gulpWorker.js = function(files, options) {
         works.push({
@@ -161,7 +163,7 @@ var gulpWorker = {};
             var watches = work.files.concat(additionals);
             console.log(colors.cyan("\tStarting watch:\n"));
             console.log(colors.yellow("\t\tWatching Files:\n"));
-            var settings = init_settings(work.options);
+            var settings = initSettings(work.options);
             var sources = findFiles(watches, settings.base_folder, {
                 show_log: true
             });

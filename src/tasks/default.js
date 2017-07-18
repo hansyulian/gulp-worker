@@ -1,15 +1,14 @@
-var defaultTask = module.exports = {};
 (function(defaultTask) {
 
-    function inject(gulp, works, options) {
+    function inject(gulp, worker, works, options) {
 
         gulp.task('default', function() {
             for (var i = 0; i < works.length; i++) {
-                ///////////////continue here first
+                var returns = worker(works[i].files, works[i].options, works[i].type);
             }
         })
     }
 
 
-    defaultTask.inject = inject
-})(defaultTask);
+    defaultTask.inject = inject;
+})(module.exports = {});

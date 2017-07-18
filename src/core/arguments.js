@@ -1,4 +1,3 @@
-var args = module.exports = {};
 (function(args, argv) {
 
     var version = argv.build ? argv.build : "";
@@ -9,4 +8,4 @@ var args = module.exports = {};
     args.production = production;
     args.development = development;
 
-})(args, require("yargs").argv);
+})(module.exports = {}, require("yargs").argv);

@@ -1,4 +1,3 @@
-var config = module.exports = {};
 (function(config) {
 
     var defaults = {
@@ -55,8 +54,8 @@ var config = module.exports = {};
 
     function initialize(configurations) {
         result = {};
-        for (var i in defaultConfigurations) {
-            result[i] = configurations[i] || defaultConfigurations[i];
+        for (var i in defaults) {
+            result[i] = configurations[i] || defaults[i];
         }
         return result;
     }
@@ -67,4 +66,4 @@ var config = module.exports = {};
     //Actions
     config.overrideDefaults = overrideDefaults;
     config.initialize = initialize;
-})(config);
+})(module.exports = {});

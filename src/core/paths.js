@@ -1,12 +1,11 @@
-var paths = module.exports = {};
-(function(paths, fileExists) {
+(function(paths, fileExists, colors) {
 
     function findFiles(files, directory, options) {
         var sources = [];
         var showLog = options.showLog;
         for (var i = 0; i < files.length; i++) {
             var file = directory + files[i];
-            if (fileExsits(file) || file.indexOf("*") != -1) {
+            if (fileExists(file) || file.indexOf("*") != -1) {
                 console.log("\t\t\t" + colors.green(file));
                 sources.push(file);
             } else
@@ -17,4 +16,4 @@ var paths = module.exports = {};
 
 
     paths.findFiles = findFiles;
-})(paths, require("fileExists"));
+})(module.exports = {}, require("file-exists"), require("colors"));
