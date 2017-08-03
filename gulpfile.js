@@ -4,8 +4,8 @@ worker.css([
     "test1.css",
     "test2.css",
 ], {
-    base_folder: "./tests/src",
-    destination: "./tests/build",
-    create_combined: false,
-    create_minified: false
+    createCombined: false,
+    createMinified: false,
+    baseFolder: "./tests/src",
+    destination: "./tests/build"
 })
