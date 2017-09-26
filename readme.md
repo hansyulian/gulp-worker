@@ -42,24 +42,36 @@ The same additional parameters also can be used for gulp watch
 There are some configurations available for gulp worker together with their default values:
 ``` javascript
 config = {
-    name: "default",                        // name of output file 
-    destination: "./",                      // output folder
-    combined_destination: null,             // destination for combined
-    minified_destination: null,             // destination for minified
-    base_folder: "./",                      // base source folder
-    generate_sourcemaps: true,              // generate sourcemap
-    version_on_destination_folder: false,   // put version number in folder
-    version_on_file: false,                 // put version number in file
-    create_minified: true,                  // create minified version
-    create_combined: true,                  // create combined version
-    combined_prefix: "",                    // prefix for combined file
-    combined_postfix: "",                   // postfix for combined file
-    minified_prefix: "",                    // prefix for minified file
-    minified_postfix: ".min",               // postfix for minified file
-    automatic_versioning: true,             // version number taken from changelog
-    changelog_file_name: "changelog.txt",   // name of changelog file
-    gulp_on_watch: true                     // when doing watch, trigger default task
-};
+        //folder and naming configuration
+        name: "default", // name of output file
+        combinedPrefix: "", // prefix for combined file
+        combinedPostfix: "", // postfix for combined file
+        minifiedPrefix: "", // prefix for minified file
+        minifiedPostfix: ".min", // postfix for minified file
+
+        destination: "./", // output folder
+        baseFolder: "./", // base source folder
+
+        //Versioning Configuration
+        versionOnDestinationFolder: false, // put version number in folder
+        versionOnFile: false, // put version number in file
+        automaticVersioning: true, // put version name based on changelog file version
+        changelogFileName: "changelog.txt", // changelog file name
+        gulpOnWatch: true, // When watch, trigger default task
+
+        //Combining Configuration
+        combinedDestination: null, // destination for combined
+        createCombined: true, // create combined file
+
+        minifiedDestination: null, // destination for minified
+        createMinified: true, // create minified file
+        generateSourceMaps: true, // generate source map
+
+
+        //debug
+        debug: false,
+        debugLevel: "debug"
+    };
 ```
 
 ## Global Configuration Overriding
